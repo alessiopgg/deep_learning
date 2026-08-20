@@ -1,0 +1,5 @@
+experiment:
+  name: random75
+
+masking:
+  strategy: random

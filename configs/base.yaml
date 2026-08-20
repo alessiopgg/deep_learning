@@ -1,0 +1,150 @@
+experiment:
+  name: mae_ast_base
+  seed: 42
+
+data:
+  train_manifest: null
+  val_manifest: null
+  test_manifest: null
+  dataset_root: null
+  stats_file: null
+
+  num_workers: 4
+  pin_memory: true
+  strict_loading: true
+
+audio:
+  sample_rate: 16000
+  n_mels: 128
+
+  frame_length_ms: 25
+  frame_shift_ms: 10
+
+  f_min: 20.0
+  f_max: 8000.0
+
+  pretrain_target_frames: 1024
+  finetune_target_frames: 512
+
+  resample: true
+
+  # Il paper normalizza a media 0 e deviazione standard circa 0.5.
+  normalize_to_half_std: true
+  eps: 1.0e-8
+
+  # Augmentation downstream. I default sono OFF per non cambiare
+  # il pretraining o altri dataset; ESC-50 li abilita nel config dedicato.
+  finetune_freq_mask: 0
+  finetune_time_mask: 0
+  finetune_noise: false
+  finetune_noise_max_scale: 0.1
+  finetune_time_roll_max: 10
+
+patching:
+  patch_h: 16
+  patch_w: 16
+
+model:
+  type: mae
+
+  # Dropout applicato alle patch proiettate solo durante il pretraining,
+  # prima di masking e positional embedding. Default OFF per preservare
+  # il comportamento storico della V2.
+  dropout_input: 0.0
+
+  encoder:
+    layers: 6
+    embed_dim: 768
+    num_heads: 12
+    mlp_ratio: 4.0
+
+    # I dropout sono separati per poter replicare la recipe MAE-AST/fairseq.
+    dropout: 0.0
+    # Per retrocompatibilità, se non vengono sovrascritti separatamente
+    # seguono il vecchio dropout unico della V2.
+    attention_dropout: ${model.encoder.dropout}
+    activation_dropout: ${model.encoder.dropout}
+
+    # Default retrocompatibili con la V2 precedente.
+    layerdrop: 0.0
+    norm_first: true
+
+  decoder:
+    layers: 2
+    embed_dim: 768
+    num_heads: 12
+    mlp_ratio: 4.0
+
+    dropout: 0.0
+    attention_dropout: ${model.decoder.dropout}
+    activation_dropout: ${model.decoder.dropout}
+    layerdrop: 0.0
+    norm_first: true
+
+  num_classes: 50
+
+masking:
+  strategy: chunk
+  ratio: 0.75
+  chunk_sizes: [3, 4, 5]
+  span_length: 10
+  shared_across_batch: true
+
+loss:
+  reconstruction_weight: 10.0
+  classification_weight: 1.0
+  label_smoothing: 0.0
+
+training:
+  batch_size: 32
+  validation_batch_size: null
+  epochs: 8
+
+  # AdamW resta il default del progetto/pretraining.
+  # Il config ESC-50 può selezionare Adam per seguire SSAST.
+  optimizer: adamw
+  learning_rate: 0.0001
+  weight_decay: 0.01
+  betas: [0.9, 0.999]
+  eps: 1.0e-8
+
+  scheduler: polynomial
+  warmup_steps: 500
+
+  # Parametri usati solo dallo scheduler epoch-based del fine-tuning.
+  lr_decay_start_epoch: 6
+  lr_decay_step_epochs: 1
+  lr_decay_gamma: 0.85
+
+  # Se valorizzato, max_steps diventa l'orizzonte primario del pretraining
+  # e il loop deriva automaticamente il numero di epoche necessario.
+  max_steps: null
+  grad_clip_norm: null
+  val_mask_seed: 12345
+
+  amp: true
+  log_interval: 100
+
+logging:
+  # "local" mantiene solo JSONL/checkpoint locali.
+  # "wandb" abilita anche il tracking Weights & Biases.
+  backend: local
+
+  wandb_project: mae-ast
+  wandb_entity: null
+
+  # Partiamo in offline per testare l'integrazione senza login/rete.
+  # Su IRIS potremo passare a "online" tramite override/config locale.
+  wandb_mode: offline
+  wandb_group: null
+  wandb_tags: []
+  wandb_dir: null
+
+checkpoint:
+  output_dir: outputs
+  save_best: true
+  save_last: true
+
+  # Nel pretraining salva anche last.pt ogni N step. Il salvataggio è
+  # atomico e permette il resume intra-epoca. Impostare null per disattivare.
+  save_every_steps: 1000

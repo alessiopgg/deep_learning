@@ -1,0 +1,6 @@
+experiment:
+  name: baseline_12l
+
+model:
+  encoder:
+    layers: 12

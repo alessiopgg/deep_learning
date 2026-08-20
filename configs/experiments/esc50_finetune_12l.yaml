@@ -1,0 +1,31 @@
+# Stessa recipe ESC-50 della variante 6L, ma encoder a 12 layer.
+
+experiment:
+  name: esc50_finetune_12l
+
+model:
+  encoder:
+    layers: 12
+
+audio:
+  finetune_freq_mask: 24
+  finetune_time_mask: 96
+  finetune_noise: true
+  finetune_noise_max_scale: 0.1
+  finetune_time_roll_max: 10
+
+training:
+  batch_size: 48
+  validation_batch_size: 96
+  epochs: 50
+
+  optimizer: adam
+  learning_rate: 0.0001
+  weight_decay: 5.0e-7
+  betas: [0.95, 0.999]
+
+  scheduler: multistep_epoch
+  warmup_steps: 0
+  lr_decay_start_epoch: 6
+  lr_decay_step_epochs: 1
+  lr_decay_gamma: 0.85

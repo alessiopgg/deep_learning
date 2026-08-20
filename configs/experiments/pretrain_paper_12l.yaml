@@ -1,0 +1,46 @@
+# Recipe principale MAE-AST patch-based, allineata alla configurazione
+# pubblica e al comando di training usato dal repository per il modello
+# patch 12L con chunk masking 75%.
+#
+# Nota: max_steps è l'orizzonte primario. Il campo training.epochs ereditato
+# da base.yaml non limita questa run quando max_steps è valorizzato.
+
+experiment:
+  name: pretrain_paper_12l
+
+model:
+  dropout_input: 0.1
+
+  encoder:
+    layers: 12
+    dropout: 0.1
+    attention_dropout: 0.1
+    activation_dropout: 0.0
+    layerdrop: 0.05
+    norm_first: false
+
+  decoder:
+    layers: 2
+    dropout: 0.1
+    attention_dropout: 0.1
+    activation_dropout: 0.0
+    layerdrop: 0.0
+    norm_first: false
+
+masking:
+  strategy: chunk
+  ratio: 0.75
+  shared_across_batch: true
+
+training:
+  optimizer: adam
+  learning_rate: 0.0001
+  weight_decay: 0.01
+  betas: [0.9, 0.98]
+  eps: 1.0e-6
+
+  scheduler: polynomial
+  warmup_steps: 32000
+  max_steps: 550000
+  grad_clip_norm: 10.0
+  amp: true

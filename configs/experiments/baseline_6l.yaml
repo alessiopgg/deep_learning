@@ -1,0 +1,4 @@
+# base.yaml usa già encoder a 6 layer.
+# Questo file assegna soltanto un nome esplicito alla run baseline.
+experiment:
+  name: baseline_6l

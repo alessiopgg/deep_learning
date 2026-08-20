@@ -1,0 +1,88 @@
+﻿# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Ambienti virtuali
+.venv/
+venv/
+env/
+ENV/
+
+# ============================================================
+# IDE / sistema operativo
+# ============================================================
+.idea/
+.vscode/
+*.iml
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============================================================
+# Config locali / machine-specific
+# ============================================================
+configs/local/*.yaml
+configs/local/*.yml
+
+# ============================================================
+# Dataset e audio locali
+# NON ignorare datafiles/: contiene manifest/stats piccoli
+# utili alla riproducibilità
+# ============================================================
+data/
+dataset/
+datasets/
+
+*.wav
+*.flac
+*.mp3
+*.m4a
+*.mkv
+
+# Shard / archivi dataset
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+*.rar
+
+# ============================================================
+# Training outputs
+# ============================================================
+outputs/
+runs/
+logs/
+wandb/
+
+# Checkpoint pesanti
+*.pt
+*.pth
+*.ckpt
+
+# File temporanei
+*.tmp
+*.temp
+*.log
+
+# ============================================================
+# Build / package
+# ============================================================
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ============================================================
+# Notebook
+# ============================================================
+.ipynb_checkpoints/
