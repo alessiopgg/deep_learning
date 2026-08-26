@@ -38,9 +38,10 @@ configs/local/*.yml
 # NON ignorare datafiles/: contiene manifest/stats piccoli
 # utili alla riproducibilità
 # ============================================================
-data/
-dataset/
-datasets/
+# Dataset locali solo alla root
+/data/
+/dataset/
+/datasets/
 
 *.wav
 *.flac
