@@ -1,6 +1,0 @@
-experiment:
-  name: random50
-
-masking:
-  strategy: random
-  ratio: 0.50

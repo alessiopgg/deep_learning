@@ -1,0 +1,63 @@
+{
+  "experiment_prefix": "L2_final_16ep_5fold",
+  "config": "configs/experiments/esc50_finetune_6l.yaml",
+  "checkpoint": "/home/inginf2026alepog/mae_ast_outputs/final_loss_ablation_16ep/L2_final_6l_chunk75_cls_only_16ep/best.pt",
+  "num_folds": 5,
+  "folds": [
+    {
+      "fold": 1,
+      "experiment_name": "L2_final_16ep_5fold_fold1",
+      "best_val_accuracy": 0.8575,
+      "best_epoch": 15,
+      "checkpoint": "/home/inginf2026alepog/mae_ast_outputs/final_loss_ablation_16ep/L2_final_6l_chunk75_cls_only_16ep/best.pt",
+      "config": "configs/experiments/esc50_finetune_6l.yaml",
+      "local_config": "configs/local/iris_esc50_fold1.yaml",
+      "output_dir": "/home/inginf2026alepog/mae_ast_outputs/final_loss_ablation_esc50/L2_final_16ep_5fold_fold1"
+    },
+    {
+      "fold": 2,
+      "experiment_name": "L2_final_16ep_5fold_fold2",
+      "best_val_accuracy": 0.8425,
+      "best_epoch": 21,
+      "checkpoint": "/home/inginf2026alepog/mae_ast_outputs/final_loss_ablation_16ep/L2_final_6l_chunk75_cls_only_16ep/best.pt",
+      "config": "configs/experiments/esc50_finetune_6l.yaml",
+      "local_config": "configs/local/iris_esc50_fold2.yaml",
+      "output_dir": "/home/inginf2026alepog/mae_ast_outputs/final_loss_ablation_esc50/L2_final_16ep_5fold_fold2"
+    },
+    {
+      "fold": 3,
+      "experiment_name": "L2_final_16ep_5fold_fold3",
+      "best_val_accuracy": 0.835,
+      "best_epoch": 25,
+      "checkpoint": "/home/inginf2026alepog/mae_ast_outputs/final_loss_ablation_16ep/L2_final_6l_chunk75_cls_only_16ep/best.pt",
+      "config": "configs/experiments/esc50_finetune_6l.yaml",
+      "local_config": "configs/local/iris_esc50_fold3.yaml",
+      "output_dir": "/home/inginf2026alepog/mae_ast_outputs/final_loss_ablation_esc50/L2_final_16ep_5fold_fold3"
+    },
+    {
+      "fold": 4,
+      "experiment_name": "L2_final_16ep_5fold_fold4",
+      "best_val_accuracy": 0.855,
+      "best_epoch": 29,
+      "checkpoint": "/home/inginf2026alepog/mae_ast_outputs/final_loss_ablation_16ep/L2_final_6l_chunk75_cls_only_16ep/best.pt",
+      "config": "configs/experiments/esc50_finetune_6l.yaml",
+      "local_config": "configs/local/iris_esc50_fold4.yaml",
+      "output_dir": "/home/inginf2026alepog/mae_ast_outputs/final_loss_ablation_esc50/L2_final_16ep_5fold_fold4"
+    },
+    {
+      "fold": 5,
+      "experiment_name": "L2_final_16ep_5fold_fold5",
+      "best_val_accuracy": 0.84,
+      "best_epoch": 16,
+      "checkpoint": "/home/inginf2026alepog/mae_ast_outputs/final_loss_ablation_16ep/L2_final_6l_chunk75_cls_only_16ep/best.pt",
+      "config": "configs/experiments/esc50_finetune_6l.yaml",
+      "local_config": "configs/local/iris_esc50_fold5.yaml",
+      "output_dir": "/home/inginf2026alepog/mae_ast_outputs/final_loss_ablation_esc50/L2_final_16ep_5fold_fold5"
+    }
+  ],
+  "mean_accuracy": 0.8460000000000001,
+  "std_population_accuracy": 0.008746427842267968,
+  "std_sample_accuracy": 0.009778803607803994,
+  "min_accuracy": 0.835,
+  "max_accuracy": 0.8575
+}

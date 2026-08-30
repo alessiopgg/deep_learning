@@ -1,0 +1,33 @@
+{
+  "mean": -4.254134522085795,
+  "std": 4.433377142672776,
+  "stats_source": "padded_input",
+  "real_frames": {
+    "mean": -4.40242424603841,
+    "std": 4.437017312627292,
+    "num_values": 60578024448,
+    "num_frames": 473265816
+  },
+  "padded_input": {
+    "mean": -4.254134522085795,
+    "std": 4.433377142672776,
+    "num_values": 62689640448,
+    "num_frames": 489762816
+  },
+  "padding_effect": {
+    "delta_mean_padded_minus_real": 0.1482897239526153,
+    "delta_std_padded_minus_real": -0.0036401699545161037,
+    "padding_frames": 16497000,
+    "padding_ratio": 0.03368365147590135,
+    "files_with_padding": 478284,
+    "files_truncated": 0,
+    "truncated_frames": 0
+  },
+  "mode": "pretrain",
+  "num_files_used": 478284,
+  "num_files_skipped": 0,
+  "target_frames": 1024,
+  "n_mels": 128,
+  "sample_rate": 16000,
+  "normalize_to_half_std": true
+}

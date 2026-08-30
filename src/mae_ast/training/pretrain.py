@@ -271,6 +271,8 @@ def train_pretrain_epoch(
                 loss_cfg=cfg.loss,
             )
 
+        optimizer_step_performed = True
+
         if scaler is not None:
             scaler.scale(
                 losses.total
@@ -283,8 +285,23 @@ def train_pretrain_epoch(
                     grad_clip_norm,
                 )
 
+            scale_before = float(
+                scaler.get_scale()
+            )
+
             scaler.step(optimizer)
             scaler.update()
+
+            scale_after = float(
+                scaler.get_scale()
+            )
+
+            # Se GradScaler rileva inf/nan, salta optimizer.step()
+            # e riduce la scala. In quel caso anche lo scheduler
+            # deve rimanere fermo.
+            optimizer_step_performed = (
+                scale_after >= scale_before
+            )
 
         else:
             losses.total.backward()
@@ -297,7 +314,8 @@ def train_pretrain_epoch(
 
             optimizer.step()
 
-        scheduler.step()
+        if optimizer_step_performed:
+            scheduler.step()
 
         sync_device(device)
 

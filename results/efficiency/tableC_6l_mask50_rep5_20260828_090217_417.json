@@ -1,0 +1,61 @@
+{
+  "run_id": "tableC_6l_mask50_rep5_20260828_090217_417",
+  "timestamp": "2026-08-28T09:02:17.417+02:00",
+  "config": {
+    "encoder_layers": 6,
+    "decoder_layers": 2,
+    "mask_strategy": "chunk",
+    "mask_ratio": 0.5,
+    "batch_size": 32,
+    "warmup_steps": 20,
+    "steps": 100,
+    "seed": 42
+  },
+  "hardware": {
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 5090",
+    "gpu_total_memory_mb": 32110.9375,
+    "torch_version": "2.13.0+cu132",
+    "cuda_version": "13.2",
+    "python_version": "3.12.14"
+  },
+  "mae": {
+    "model": "MAE-AST",
+    "steps": 100,
+    "batch_size": 32,
+    "total_parameters": 57336370,
+    "trainable_parameters": 57336370,
+    "encoder_tokens": 256,
+    "decoder_tokens": 512,
+    "amp_enabled": true,
+    "total_time_sec": 3.827780367981177,
+    "step_time_sec_avg": 0.03827780367981177,
+    "examples_per_sec": 835.993628779627,
+    "baseline_gpu_mem_allocated_mb": 970.31982421875,
+    "baseline_gpu_mem_reserved_mb": 3976.0,
+    "peak_gpu_mem_allocated_mb": 3709.82763671875,
+    "peak_gpu_mem_reserved_mb": 3976.0
+  },
+  "proxy": {
+    "model": "FullSequenceProxy",
+    "steps": 100,
+    "batch_size": 32,
+    "total_parameters": 57297920,
+    "trainable_parameters": 57297920,
+    "encoder_tokens": 512,
+    "decoder_tokens": 512,
+    "amp_enabled": true,
+    "total_time_sec": 5.743478311022045,
+    "step_time_sec_avg": 0.057434783110220454,
+    "examples_per_sec": 557.1536665959071,
+    "baseline_gpu_mem_allocated_mb": 938.509765625,
+    "baseline_gpu_mem_reserved_mb": 5482.0,
+    "peak_gpu_mem_allocated_mb": 5056.0087890625,
+    "peak_gpu_mem_reserved_mb": 5482.0
+  },
+  "comparison": {
+    "speedup_mae_vs_proxy": 1.500472273452626,
+    "memory_reduction_allocated_percent": 26.625372077198517,
+    "memory_reduction_reserved_percent": 27.471725647573876
+  }
+}

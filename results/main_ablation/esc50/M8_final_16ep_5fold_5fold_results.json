@@ -1,0 +1,63 @@
+{
+  "experiment_prefix": "M8_final_16ep_5fold",
+  "config": "configs/experiments/esc50_finetune_12l.yaml",
+  "checkpoint": "/home/inginf2026alepog/mae_ast_outputs/final_pretrain_16ep/M8_final_12l_chunk75_16ep/best.pt",
+  "num_folds": 5,
+  "folds": [
+    {
+      "fold": 1,
+      "experiment_name": "M8_final_16ep_5fold_fold1",
+      "best_val_accuracy": 0.8375,
+      "best_epoch": 38,
+      "checkpoint": "/home/inginf2026alepog/mae_ast_outputs/final_pretrain_16ep/M8_final_12l_chunk75_16ep/best.pt",
+      "config": "configs/experiments/esc50_finetune_12l.yaml",
+      "local_config": "configs/local/iris_esc50_fold1.yaml",
+      "output_dir": "/home/inginf2026alepog/mae_ast_outputs/final_esc50_16ep/M8_final_16ep_5fold_fold1"
+    },
+    {
+      "fold": 2,
+      "experiment_name": "M8_final_16ep_5fold_fold2",
+      "best_val_accuracy": 0.8325,
+      "best_epoch": 43,
+      "checkpoint": "/home/inginf2026alepog/mae_ast_outputs/final_pretrain_16ep/M8_final_12l_chunk75_16ep/best.pt",
+      "config": "configs/experiments/esc50_finetune_12l.yaml",
+      "local_config": "configs/local/iris_esc50_fold2.yaml",
+      "output_dir": "/home/inginf2026alepog/mae_ast_outputs/final_esc50_16ep/M8_final_16ep_5fold_fold2"
+    },
+    {
+      "fold": 3,
+      "experiment_name": "M8_final_16ep_5fold_fold3",
+      "best_val_accuracy": 0.855,
+      "best_epoch": 21,
+      "checkpoint": "/home/inginf2026alepog/mae_ast_outputs/final_pretrain_16ep/M8_final_12l_chunk75_16ep/best.pt",
+      "config": "configs/experiments/esc50_finetune_12l.yaml",
+      "local_config": "configs/local/iris_esc50_fold3.yaml",
+      "output_dir": "/home/inginf2026alepog/mae_ast_outputs/final_esc50_16ep/M8_final_16ep_5fold_fold3"
+    },
+    {
+      "fold": 4,
+      "experiment_name": "M8_final_16ep_5fold_fold4",
+      "best_val_accuracy": 0.8775,
+      "best_epoch": 15,
+      "checkpoint": "/home/inginf2026alepog/mae_ast_outputs/final_pretrain_16ep/M8_final_12l_chunk75_16ep/best.pt",
+      "config": "configs/experiments/esc50_finetune_12l.yaml",
+      "local_config": "configs/local/iris_esc50_fold4.yaml",
+      "output_dir": "/home/inginf2026alepog/mae_ast_outputs/final_esc50_16ep/M8_final_16ep_5fold_fold4"
+    },
+    {
+      "fold": 5,
+      "experiment_name": "M8_final_16ep_5fold_fold5",
+      "best_val_accuracy": 0.8225,
+      "best_epoch": 15,
+      "checkpoint": "/home/inginf2026alepog/mae_ast_outputs/final_pretrain_16ep/M8_final_12l_chunk75_16ep/best.pt",
+      "config": "configs/experiments/esc50_finetune_12l.yaml",
+      "local_config": "configs/local/iris_esc50_fold5.yaml",
+      "output_dir": "/home/inginf2026alepog/mae_ast_outputs/final_esc50_16ep/M8_final_16ep_5fold_fold5"
+    }
+  ],
+  "mean_accuracy": 0.845,
+  "std_population_accuracy": 0.01936491673103706,
+  "std_sample_accuracy": 0.02165063509461094,
+  "min_accuracy": 0.8225,
+  "max_accuracy": 0.8775
+}

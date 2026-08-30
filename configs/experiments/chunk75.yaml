@@ -1,4 +1,0 @@
-# base.yaml usa già chunk masking con ratio 0.75.
-# Questo file assegna soltanto il nome dell'esperimento.
-experiment:
-  name: chunk75

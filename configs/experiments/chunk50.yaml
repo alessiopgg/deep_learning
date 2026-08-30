@@ -1,5 +1,0 @@
-experiment:
-  name: chunk50
-
-masking:
-  ratio: 0.50

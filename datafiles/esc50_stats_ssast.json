@@ -1,6 +1,0 @@
-{
-  "mean": -6.6268077,
-  "std": 5.358466,
-  "stats_source": "SSAST official ESC-50 fine-tuning recipe",
-  "target_frames": 512
-}

@@ -1,0 +1,10 @@
+fold,best_epoch,best_val_accuracy
+1,23,0.85
+2,24,0.885
+3,32,0.845
+4,20,0.8775
+5,13,0.8
+
+mean_accuracy,0.8515
+std_population_accuracy,0.02998332870112988
+std_sample_accuracy,0.03352238058372344

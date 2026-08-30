@@ -40,15 +40,27 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--config",
         required=True,
-        help="Config esperimento ESC-50, es. esc50_finetune_6l.yaml.",
+        help="Config esperimento ESC-50, es. esc50_finetune_final_6l.yaml.",
     )
     parser.add_argument(
-        "--local-config-template",
-        default="configs/local/windows_esc50_fold{fold}.yaml",
-        help=(
-            "Template dei config locali. Deve contenere {fold}. "
-            "Esempio: configs/local/windows_esc50_fold{fold}.yaml"
-        ),
+        "--dataset-root",
+        required=True,
+        help="Root locale del dataset ESC-50.",
+    )
+    parser.add_argument(
+        "--train-manifest-template",
+        default="datafiles/esc50_train_fold{fold}.json",
+        help="Template manifest train ESC-50; deve contenere {fold}.",
+    )
+    parser.add_argument(
+        "--val-manifest-template",
+        default="datafiles/esc50_eval_fold{fold}.json",
+        help="Template manifest validation ESC-50; deve contenere {fold}.",
+    )
+    parser.add_argument(
+        "--stats-file",
+        default="datafiles/audioset500k_train_stats_padded.json",
+        help="Statistiche di normalizzazione usate nel fine-tuning.",
     )
     parser.add_argument(
         "--checkpoint",
@@ -149,7 +161,6 @@ def build_finetune_command(
     *,
     python_executable: str,
     config: str,
-    local_config: str,
     checkpoint: str,
     experiment_name: str,
     output_root: str,
@@ -180,8 +191,6 @@ def build_finetune_command(
         "scripts/finetune.py",
         "--config",
         config,
-        "--local-config",
-        local_config,
         "--checkpoint",
         checkpoint,
         "--set",
@@ -315,20 +324,45 @@ def main() -> None:
         raise FileNotFoundError(f"Checkpoint non trovato: {checkpoint}")
     if not config.exists():
         raise FileNotFoundError(f"Config non trovato: {config}")
-    if "{fold}" not in args.local_config_template:
-        raise ValueError(
-            "--local-config-template deve contenere il placeholder {fold}."
+    dataset_root = Path(args.dataset_root)
+    stats_file = Path(args.stats_file)
+
+    if not dataset_root.exists():
+        raise FileNotFoundError(
+            f"Dataset ESC-50 non trovato: {dataset_root}"
+        )
+    if not stats_file.exists():
+        raise FileNotFoundError(
+            f"File statistiche non trovato: {stats_file}"
         )
 
-    local_configs = {
-        fold: Path(args.local_config_template.format(fold=fold))
+    for template_name, template in (
+        ("--train-manifest-template", args.train_manifest_template),
+        ("--val-manifest-template", args.val_manifest_template),
+    ):
+        if "{fold}" not in template:
+            raise ValueError(
+                f"{template_name} deve contenere il placeholder {{fold}}."
+            )
+
+    train_manifests = {
+        fold: Path(args.train_manifest_template.format(fold=fold))
         for fold in folds
     }
-    missing_configs = [str(path) for path in local_configs.values() if not path.exists()]
-    if missing_configs:
+    val_manifests = {
+        fold: Path(args.val_manifest_template.format(fold=fold))
+        for fold in folds
+    }
+
+    missing_manifests = [
+        str(path)
+        for path in [*train_manifests.values(), *val_manifests.values()]
+        if not path.exists()
+    ]
+    if missing_manifests:
         raise FileNotFoundError(
-            "Config locali ESC-50 mancanti:\n  - "
-            + "\n  - ".join(missing_configs)
+            "Manifest ESC-50 mancanti:\n  - "
+            + "\n  - ".join(missing_manifests)
         )
 
     wandb_group = args.wandb_group or args.experiment_prefix
@@ -340,6 +374,8 @@ def main() -> None:
     print("=" * 72)
     print(f"Checkpoint condiviso: {checkpoint}")
     print(f"Config:                {config}")
+    print(f"Dataset root:          {dataset_root}")
+    print(f"Stats:                 {stats_file}")
     print(f"Fold:                  {folds}")
     print(f"Prefix:                {args.experiment_prefix}")
     print(f"Output root:           {output_root}")
@@ -379,17 +415,26 @@ def main() -> None:
                     "--overwrite-partial per rilanciare un fold incompleto."
                 )
 
+        fold_overrides = [
+            f"data.train_manifest={train_manifests[fold]}",
+            f"data.val_manifest={val_manifests[fold]}",
+            f"data.dataset_root={dataset_root}",
+            f"data.stats_file={stats_file}",
+        ]
+
+        if args.set:
+            fold_overrides.extend(args.set)
+
         command = build_finetune_command(
             python_executable=sys.executable,
             config=str(config),
-            local_config=str(local_configs[fold]),
             checkpoint=str(checkpoint),
             experiment_name=experiment_name,
             output_root=str(output_root),
             logging_backend=args.logging_backend,
             wandb_mode=args.wandb_mode,
             wandb_group=wandb_group,
-            extra_overrides=args.set,
+            extra_overrides=fold_overrides,
         )
 
         print("Comando:")
@@ -415,7 +460,10 @@ def main() -> None:
             "best_epoch": best_epoch,
             "checkpoint": str(checkpoint),
             "config": str(config),
-            "local_config": str(local_configs[fold]),
+            "train_manifest": str(train_manifests[fold]),
+            "val_manifest": str(val_manifests[fold]),
+            "dataset_root": str(dataset_root),
+            "stats_file": str(stats_file),
             "output_dir": str(output_dir),
         }
 
