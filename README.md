@@ -262,6 +262,20 @@ The published results use the defaults encoded in the runner.
 
 ---
 
+## Experimental hardware
+
+The final experiments were executed on the **IRIS compute server** using:
+
+- **GPU:** NVIDIA GeForce RTX 5090
+- **GPU memory:** ~32 GB
+- **PyTorch:** 2.13.0+cu132
+- **CUDA:** 13.2
+- **Python:** 3.12.14
+
+The reported efficiency benchmarks were collected on this same GPU.
+
+Training and benchmark scripts do not hard-code a specific GPU device; GPU selection is left to the execution environment through `CUDA_VISIBLE_DEVICES`.
+---
 ## Results and provenance
 
 `results/` contains the artifacts used to derive the reported experimental results:
