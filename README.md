@@ -42,12 +42,6 @@ Configurazione controllata: **6L + chunk + 75%**.
 | Classification only | **84.60 ± 0.87%** |
 | Joint | 84.35 ± 1.46% |
 
-La loss congiunta è:
-
-\[
-\mathcal{L}=10\,\mathcal{L}_{rec}+\mathcal{L}_{cls}
-\]
-
 `L_cls` è una loss contrastiva **intra-clip** sulle patch mascherate: le 527 label AudioSet non vengono usate come target supervisionati nel pretraining.
 
 ### Efficiency benchmark
